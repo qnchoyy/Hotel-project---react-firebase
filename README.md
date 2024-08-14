@@ -10,4 +10,7 @@
 - [x] install firebase tools
 - [x] install mui (css tool)
 
-##
+## Page Implementations
+
+- [x] Login
+- [ ] Register

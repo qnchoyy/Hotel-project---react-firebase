@@ -5,9 +5,9 @@
 - [x] CleanUp
 - [x] Install react-router-dom
 - [x] Install firebase
+- [x] Setup react-router-dom
+- [x] firebase config
+- [x] install firebase tools
+- [x] install mui (css tool)
 
-## React Router
-
-- [x]Setup react-router-dom
-- [x]Add routes in App.jsx
--
+##

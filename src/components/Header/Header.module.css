@@ -8,6 +8,12 @@
   border-radius: 8px;
 }
 
+.logo {
+  max-height: 80px;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
 .logo a {
   font-size: 1.5rem;
   font-weight: bold;

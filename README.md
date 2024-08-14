@@ -13,4 +13,5 @@
 ## Page Implementations
 
 - [x] Login
-- [ ] Register
+- [x] Register
+- [x] Home

@@ -1,0 +1,13 @@
+.heroSection {
+  background-image: url(../../images/hotel.avif);
+  background-size: cover;
+  background-position: center;
+  height: 600px;
+}
+
+.heroText {
+  color: rgb(2, 9, 11);
+  text-align: center;
+  padding-top: 50px;
+  font-size: 2em;
+}

@@ -2,8 +2,9 @@ import { useState } from "react";
 import { auth } from "../../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
+
+import styles from "./Login.module.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -25,28 +26,30 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
-      <h2>Sign in to your account</h2>
+    <div className={styles.loginContainer}>
+      <h2 className={styles.loginh2}>Sign in to your account</h2>
       <div className="inputs">
+        <label htmlFor="email">Email </label>
         <input
           type="email"
-          placeholder="Email.."
+          placeholder="george@gmail.com"
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div className="inputs">
+        <label htmlFor="password">Password</label>
         <input
           type="password"
-          placeholder="Password.."
+          placeholder="********"
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <button className="login-btn" onClick={handleLogin}>
+      <button className={styles.loginBtn} onClick={handleLogin}>
         Login
       </button>
       <p className="case">
         Don't have a profile?
-        <Link className="register-link" to="/register">
+        <Link className={styles.registerLink} to="/register">
           Register
         </Link>
       </p>

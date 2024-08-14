@@ -3,6 +3,8 @@ import { auth } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 
+import styles from "./Register.module.css";
+
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,42 +23,48 @@ export default function Register() {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password, rePassword);
+      await createUserWithEmailAndPassword(auth, email, password);
       navigate("/");
     } catch (err) {
       console.error(err);
     }
   };
   return (
-    <div className="login-container">
-      <h2>Register</h2>
-      <div className="inputs">
+    <div className={styles.registerContainer}>
+      <h2 className={styles.registerh2}>Register</h2>
+      <div className={styles.inputs}>
+        <label htmlFor="email">Email </label>
         <input
           type="email"
-          placeholder="Email.."
+          value={email}
+          placeholder="george@gmail.com"
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-      <div className="inputs">
+      <div className={styles.inputs}>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
-          placeholder="Password.."
+          value={password}
+          placeholder="********"
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <div className="inputs">
+      <div className={styles.inputs}>
+        <label htmlFor="rePassword">Confirm Password</label>
         <input
           type="Password"
-          placeholder="Repassword.."
+          value={rePassword}
+          placeholder="********"
           onChange={(e) => setRePassword(e.target.value)}
         />
       </div>
-      <button className="login-btn" onClick={handleRegister}>
+      <button className={styles.registerBtn} onClick={handleRegister}>
         Register
       </button>
-      <p className="case">
+      <p className={styles.case}>
         Already have a profile?
-        <Link className="register-link" to="/login">
+        <Link className={styles.loginLink} to="/login">
           Log in
         </Link>
       </p>

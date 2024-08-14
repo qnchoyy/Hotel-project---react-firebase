@@ -3,8 +3,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #f8f8f8;
-  border-bottom: 1px solid #ddd;
+  background-color: #c4e1ef;
+  border-bottom: 1px solid #a79f9f;
+  border-radius: 8px;
 }
 
 .logo a {

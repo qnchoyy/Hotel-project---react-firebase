@@ -1,4 +1,3 @@
-import hotel from "../../images/hotel.avif";
 import styles from "./Home.module.css";
 
 export default function Home() {

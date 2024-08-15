@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { auth } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+
+import { HotelContext } from "../../context/hotelContext";
 
 import styles from "./Register.module.css";
 
@@ -9,6 +11,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const { setUserId } = useContext(HotelContext);
   const navigate = useNavigate();
 
   const handleRegister = async () => {
@@ -23,7 +26,14 @@ export default function Register() {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      setUserId(user.uid);
       navigate("/");
     } catch (err) {
       console.error(err);

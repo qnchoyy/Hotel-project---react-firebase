@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { auth } from "../../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { Link, useNavigate } from "react-router-dom";
+import { HotelContext } from "../../context/hotelContext";
 
 import styles from "./Login.module.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUserId } = useContext(HotelContext);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -18,7 +20,14 @@ export default function Login() {
     }
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      setUserId(user.uid);
       navigate("/");
     } catch (err) {
       console.error(err);

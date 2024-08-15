@@ -35,3 +35,28 @@
 .nav ul li a:hover {
   color: #007bff;
 }
+
+.logoutBtn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #f44336;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logoutBtn:hover {
+  background-color: #d32f2f;
+}
+
+.logoutBtn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.5);
+}
+
+.logoutBtn:active {
+  background-color: #b71c1c;
+}

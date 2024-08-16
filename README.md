@@ -15,3 +15,9 @@
 - [x] Login
 - [x] Register
 - [x] Home
+- [x] Add logout
+
+## Others
+
+- [x] Add context
+- [ ] Add reservations

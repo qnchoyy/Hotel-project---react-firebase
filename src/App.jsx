@@ -6,6 +6,7 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Home from "./components/Home/Home";
 import { useState } from "react";
+import Reservation from "./components/Reservation/Reservation";
 
 function App() {
   const [userId, setUserId] = useState("");
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/reservations" element={<Reservation />} />
         </Routes>
       </HotelContext.Provider>
     </>

@@ -6,11 +6,10 @@ import {
   addDoc,
   collection,
   Timestamp,
-  query,
-  where,
-  getDocs,
   getDoc,
   doc,
+  updateDoc,
+  setDoc,
 } from "firebase/firestore";
 
 import { HotelContext } from "../../context/hotelContext";
@@ -25,6 +24,19 @@ export default function Reservation() {
   const navigate = useNavigate();
 
   const reservationCollectionRef = collection(db, "reservations");
+
+  // Функция за проверка и създаване на документ за наличност
+  const checkAndCreateAvailability = async (roomType, date) => {
+    const availabilityDocRef = doc(db, "rooms", roomType, "availability", date);
+
+    const availabilityDoc = await getDoc(availabilityDocRef);
+
+    if (!availabilityDoc.exists()) {
+      await setDoc(availabilityDocRef, {
+        availableRooms: 10, // Можеш да зададеш начален брой налични стаи тук
+      });
+    }
+  };
 
   const handleReservation = async () => {
     if (!userId) {
@@ -57,36 +69,39 @@ export default function Reservation() {
     }
 
     try {
-      // Създаване на заявка за проверка на налични стаи от избрания тип
-      const q = query(
-        reservationCollectionRef,
-        where("roomType", "==", roomType),
-        where("checkInDate", "<", checkOutTimestamp),
-        where("checkOutDate", ">", checkInTimestamp)
-      );
+      let allDaysAvailable = true;
 
-      const querySnapshot = await getDocs(q);
+      for (
+        let day = new Date(checkInTimestamp.toDate());
+        day <= checkOutTimestamp.toDate();
+        day.setDate(day.getDate() + 1)
+      ) {
+        const dayFormatted = day.toISOString().split("T")[0];
 
-      const numberOfReservations = querySnapshot.size;
+        await checkAndCreateAvailability(roomType, dayFormatted);
 
-      // Вземане на броя налични стаи от съответния документ в колекцията `rooms`
-      const roomDocRef = doc(db, "rooms", roomType); // roomType трябва да бъде ID на документа
-      const roomDoc = await getDoc(roomDocRef);
+        const availabilityDocRef = doc(
+          db,
+          "rooms",
+          roomType,
+          "availability",
+          dayFormatted
+        );
 
-      if (!roomDoc.exists()) {
-        alert("Room type does not exist.");
-        return;
+        const availabilityDoc = await getDoc(availabilityDocRef);
+
+        if (availabilityDoc.data().availableRooms <= 0) {
+          allDaysAvailable = false;
+          break;
+        }
       }
 
-      const availableRooms = roomDoc.data().availableRooms;
-      console.log(availableRooms);
-
-      if (numberOfReservations >= availableRooms) {
+      if (!allDaysAvailable) {
         alert("No available rooms for the selected dates.");
         return;
       }
 
-      // Ако има налични стаи, добавяме резервацията
+      // Добавяне на резервация
       await addDoc(reservationCollectionRef, {
         userId: userId,
         checkInDate: checkInTimestamp,
@@ -94,6 +109,29 @@ export default function Reservation() {
         roomType: roomType,
         guests: guests,
       });
+
+      // Намаляване на броя на наличните стаи за всяка дата
+      for (
+        let day = new Date(checkInTimestamp.toDate());
+        day <= checkOutTimestamp.toDate();
+        day.setDate(day.getDate() + 1)
+      ) {
+        const dayFormatted = day.toISOString().split("T")[0];
+
+        const availabilityDocRef = doc(
+          db,
+          "rooms",
+          roomType,
+          "availability",
+          dayFormatted
+        );
+
+        const availabilityDoc = await getDoc(availabilityDocRef);
+
+        await updateDoc(availabilityDocRef, {
+          availableRooms: availabilityDoc.data().availableRooms - 1,
+        });
+      }
 
       navigate("/");
     } catch (err) {

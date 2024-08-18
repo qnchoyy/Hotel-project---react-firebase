@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 
 import { HotelContext } from "../../context/hotelContext";
+import styles from "./Reservation.module.css";
 
 export default function Reservation() {
   const { userId } = useContext(HotelContext);
@@ -133,7 +134,7 @@ export default function Reservation() {
         });
       }
 
-      navigate("/");
+      navigate("/reservation-confirmation");
     } catch (err) {
       console.error("Error creating reservation: ", err.code, err.message);
       alert(`Error creating reservation: ${err.message}`);
@@ -141,47 +142,51 @@ export default function Reservation() {
   };
 
   return (
-    <>
-      <div>
-        <h2>Make a reservation</h2>
-        <div>
-          <label>Check-in Date</label>
-          <input
-            type="date"
-            value={checkInDate}
-            onChange={(e) => setCheckInDate(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Check-out Date</label>
-          <input
-            type="date"
-            value={checkOutDate}
-            onChange={(e) => setCheckOutDate(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Room Type</label>
-          <select
-            value={roomType}
-            onChange={(e) => setRoomType(e.target.value)}
-          >
-            <option value=""></option>
-            <option value="single">Single Room</option>
-            <option value="double">Double Room</option>
-            <option value="apartament">Apartament</option>
-          </select>
-        </div>
-        <div>
-          <label>Guests</label>
-          <input
-            type="number"
-            value={guests}
-            onChange={(e) => setGuests(Number(e.target.value))}
-          />
-        </div>
-        <button onClick={handleReservation}>Reserve</button>
+    <div className={styles.container}>
+      <h2 className={styles.heading}>Make a reservation</h2>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Check-in Date</label>
+        <input
+          type="date"
+          className={styles.input}
+          value={checkInDate}
+          onChange={(e) => setCheckInDate(e.target.value)}
+        />
       </div>
-    </>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Check-out Date</label>
+        <input
+          type="date"
+          className={styles.input}
+          value={checkOutDate}
+          onChange={(e) => setCheckOutDate(e.target.value)}
+        />
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Room Type</label>
+        <select
+          value={roomType}
+          className={styles.select}
+          onChange={(e) => setRoomType(e.target.value)}
+        >
+          <option value=""></option>
+          <option value="single">Single Room</option>
+          <option value="double">Double Room</option>
+          <option value="apartament">Apartament</option>
+        </select>
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Guests</label>
+        <input
+          type="number"
+          className={styles.input}
+          value={guests}
+          onChange={(e) => setGuests(Number(e.target.value))}
+        />
+      </div>
+      <button className={styles.button} onClick={handleReservation}>
+        Reserve
+      </button>
+    </div>
   );
 }

@@ -13,10 +13,13 @@ import {
 } from "firebase/firestore";
 
 import { HotelContext } from "../../context/hotelContext";
+import { NotificationContext } from "../../context/notificationContext";
+
 import styles from "./Reservation.module.css";
 
 export default function Reservation() {
   const { userId } = useContext(HotelContext);
+  const { addNotification } = useContext(NotificationContext);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [roomType, setRoomType] = useState("");
@@ -41,23 +44,35 @@ export default function Reservation() {
 
   const handleReservation = async () => {
     if (!userId) {
-      alert("You must be logged in to make a reservation!");
+      addNotification({
+        severity: "error",
+        message: "You must be logged in.",
+      });
       navigate("/login");
       return;
     }
 
     if (!checkInDate || !checkOutDate) {
-      alert("Please select both check-in and check-out dates.");
+      addNotification({
+        severity: "error",
+        message: "Please select both check-in and check-out dates.",
+      });
       return;
     }
 
     if (guests <= 0) {
-      alert("Number of guests must be at least 1.");
+      addNotification({
+        severity: "error",
+        message: "Number of guests must be at least 1.",
+      });
       return;
     }
 
     if (!roomType) {
-      alert("Please select a room type.");
+      addNotification({
+        severity: "error",
+        message: "Please select a room type.",
+      });
       return;
     }
 
@@ -65,7 +80,10 @@ export default function Reservation() {
     const checkOutTimestamp = Timestamp.fromDate(new Date(checkOutDate));
 
     if (checkOutTimestamp <= checkInTimestamp) {
-      alert("Check-out date must be later than check-in date.");
+      addNotification({
+        severity: "error",
+        message: "Check-out date must be later than check-in date.",
+      });
       return;
     }
 
@@ -98,7 +116,10 @@ export default function Reservation() {
       }
 
       if (!allDaysAvailable) {
-        alert("No available rooms for the selected dates.");
+        addNotification({
+          severity: "error",
+          message: "No available rooms for the selected dates.",
+        });
         return;
       }
 
@@ -134,10 +155,17 @@ export default function Reservation() {
         });
       }
 
+      addNotification({
+        severity: "success",
+        message: `Reservation confirmed!`,
+      });
       navigate("/reservation-confirmation");
     } catch (err) {
       console.error("Error creating reservation: ", err.code, err.message);
-      alert(`Error creating reservation: ${err.message}`);
+      addNotification({
+        severity: "error",
+        message: `Creating reservation: ${err.message}`,
+      });
     }
   };
 

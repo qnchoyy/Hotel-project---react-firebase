@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 
 import { HotelContext } from "../../context/hotelContext";
+import { NotificationContext } from "../../context/notificationContext";
 
 import styles from "./Register.module.css";
 
@@ -12,16 +13,23 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const { setUserId } = useContext(HotelContext);
+  const { addNotification } = useContext(NotificationContext);
   const navigate = useNavigate();
 
   const handleRegister = async () => {
     if (!email || !password || !rePassword) {
-      alert("All fields are required.");
+      addNotification({
+        severity: "error",
+        message: "All fields are required.",
+      });
       return;
     }
 
     if (password !== rePassword) {
-      alert("Passwords do not match.");
+      addNotification({
+        severity: "error",
+        message: "Passwords don't match!",
+      });
       return;
     }
 
@@ -33,6 +41,10 @@ export default function Register() {
       );
       const user = userCredential.user;
 
+      addNotification({
+        severity: "success",
+        message: "Successfull registration!",
+      });
       setUserId(user.uid);
       navigate("/");
     } catch (err) {

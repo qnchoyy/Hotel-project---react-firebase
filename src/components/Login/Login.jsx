@@ -4,18 +4,25 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { Link, useNavigate } from "react-router-dom";
 import { HotelContext } from "../../context/hotelContext";
+import { NotificationContext } from "../../context/notificationContext";
 
 import styles from "./Login.module.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const { setUserId } = useContext(HotelContext);
+  const { addNotification } = useContext(NotificationContext);
+
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!email || !password) {
-      alert("Please enter both email and password.");
+      addNotification({
+        severity: "error",
+        message: "Please enter both email and password.",
+      });
       return;
     }
 
@@ -27,10 +34,17 @@ export default function Login() {
       );
       const user = userCredential.user;
 
+      addNotification({
+        severity: "success",
+        message: "Successfully logged in!",
+      });
       setUserId(user.uid);
       navigate("/");
     } catch (err) {
-      console.error(err);
+      addNotification({
+        severity: "error",
+        message: "Please check your details.",
+      });
     }
   };
 

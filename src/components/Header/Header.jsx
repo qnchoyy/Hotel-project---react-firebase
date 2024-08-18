@@ -7,15 +7,21 @@ import hotelLogo from "../../images/hotelLogo.png";
 import { auth } from "../../config/firebase";
 import { signOut } from "firebase/auth";
 import { useContext } from "react";
+import { NotificationContext } from "../../context/notificationContext";
 
 export default function Header() {
   const { userId, setUserId } = useContext(HotelContext);
+  const { addNotification } = useContext(NotificationContext);
   const navigate = useNavigate();
 
   const logoutHandler = async () => {
     try {
       await signOut(auth);
       setUserId(null);
+      addNotification({
+        severity: "success",
+        message: "Successfully logged out.",
+      });
       navigate("/login");
     } catch (err) {
       console.error(err);

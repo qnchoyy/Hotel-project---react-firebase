@@ -24,6 +24,7 @@ export default function Reservation() {
   const [checkOutDate, setCheckOutDate] = useState("");
   const [roomType, setRoomType] = useState("");
   const [guests, setGuests] = useState(1);
+  const [roomPrice, setRoomPrice] = useState(null);
 
   const navigate = useNavigate();
 
@@ -40,6 +41,63 @@ export default function Reservation() {
         availableRooms: 10, // Можеш да зададеш начален брой налични стаи тук
       });
     }
+  };
+
+  const fetchRoomPrice = async (selectedRoomType) => {
+    try {
+      const roomDocRef = doc(db, "rooms", selectedRoomType);
+      const roomDoc = await getDoc(roomDocRef);
+      if (roomDoc.exists()) {
+        console.log("Room document data:", roomDoc.data());
+        console.log("Room price:", roomDoc.data().price);
+        setRoomPrice(roomDoc.data().price);
+      } else {
+        console.error("No such document!");
+        setRoomPrice(null);
+      }
+    } catch (error) {
+      console.error("Error fetching room price:", error);
+      addNotification({
+        severity: "error",
+        message: `Error fetching room price: ${error.message}`,
+      });
+    }
+  };
+
+  const handleGuestsChange = (e) => {
+    const selectedGuests = Number(e.target.value);
+
+    let maxGuests = 1;
+    if (roomType === "double") {
+      maxGuests = 2;
+    } else if (roomType === "apartament") {
+      maxGuests = 4;
+    }
+
+    if (selectedGuests > maxGuests) {
+      addNotification({
+        severity: "error",
+        message: `The selected room type allows a maximum of ${maxGuests} guest(s).`,
+      });
+      setGuests(maxGuests);
+    } else {
+      setGuests(selectedGuests);
+    }
+  };
+
+  const handleRoomTypeChange = (e) => {
+    const selectedRoomType = e.target.value;
+    setRoomType(selectedRoomType);
+    fetchRoomPrice(selectedRoomType);
+
+    let defaultGuests = 1;
+    if (selectedRoomType === "double") {
+      defaultGuests = guests > 2 ? 2 : guests;
+    } else if (selectedRoomType === "apartament") {
+      defaultGuests = guests > 4 ? 4 : guests;
+    }
+
+    setGuests(defaultGuests);
   };
 
   const handleReservation = async () => {
@@ -60,6 +118,14 @@ export default function Reservation() {
       return;
     }
 
+    if (checkInDate === checkOutDate) {
+      addNotification({
+        severity: "error",
+        message: "Check-in date and check-out date cannot be the same.",
+      });
+      return;
+    }
+
     if (guests <= 0) {
       addNotification({
         severity: "error",
@@ -72,6 +138,25 @@ export default function Reservation() {
       addNotification({
         severity: "error",
         message: "Please select a room type.",
+      });
+      return;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (new Date(checkInDate) < today) {
+      addNotification({
+        severity: "error",
+        message: "Check-in date cannot be in the past.",
+      });
+      return;
+    }
+
+    if (new Date(checkOutDate) <= today) {
+      addNotification({
+        severity: "error",
+        message: "Check-out date must be later than today.",
       });
       return;
     }
@@ -195,7 +280,7 @@ export default function Reservation() {
         <select
           value={roomType}
           className={styles.select}
-          onChange={(e) => setRoomType(e.target.value)}
+          onChange={handleRoomTypeChange}
         >
           <option value=""></option>
           <option value="single">Single Room</option>
@@ -203,13 +288,18 @@ export default function Reservation() {
           <option value="apartament">Apartament</option>
         </select>
       </div>
+      {roomPrice && (
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Price per night: ${roomPrice}</label>
+        </div>
+      )}
       <div className={styles.formGroup}>
         <label className={styles.label}>Guests</label>
         <input
           type="number"
           className={styles.input}
           value={guests}
-          onChange={(e) => setGuests(Number(e.target.value))}
+          onChange={handleGuestsChange}
         />
       </div>
       <button className={styles.button} onClick={handleReservation}>

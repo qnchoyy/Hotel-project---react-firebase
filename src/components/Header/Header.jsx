@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { HotelContext } from "../../context/hotelContext";
 
 import styles from "./Header.module.css";
-import hotelLogo from "../../images/hotelLogo.png";
+import logo from "../../images/logo.png";
 
 import { auth } from "../../config/firebase";
 import { signOut } from "firebase/auth";
@@ -32,7 +32,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.logo}>
         <Link to="/">
-          <img className={styles.logo} src={hotelLogo} alt="hotelLogo" />
+          <img className={styles.logo} src={logo} alt="hotelLogo" />
         </Link>
       </div>
       <nav className={styles.nav}>

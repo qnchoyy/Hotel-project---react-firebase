@@ -20,4 +20,5 @@
 ## Others
 
 - [x] Add context
-- [ ] Add reservations
+- [x] Add reservations
+- [x] Add notifications

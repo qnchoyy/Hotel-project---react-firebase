@@ -6,8 +6,51 @@
 }
 
 .heroText {
-  color: rgb(2, 9, 11);
+  font-family: sans-serif, Arial;
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  background-color: #4575e6;
+  color: white;
+  font-size: 25px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+.heroText:hover {
+  background-color: #2174c2;
+  transform: scale(1.05);
+}
+
+.heroText:active {
+  background-color: #06265a;
+  transform: scale(0.95);
+}
+
+.headlineText {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Great Vibes", cursive;
+  font-size: 72px;
+  color: #151212;
+  text-shadow: 2px 4px 6px rgba(0, 0, 0, 0.5);
+  letter-spacing: 2px;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
   text-align: center;
-  padding-top: 50px;
-  font-size: 2em;
+}
+
+@media (max-width: 768px) {
+  h1.headlineText {
+    font-size: 48px;
+    font-size: 7vw;
+  }
 }

@@ -1,9 +1,10 @@
 .header {
   display: flex;
   justify-content: space-between;
+  font-size: 1rem;
   align-items: center;
   padding: 0.25rem 1rem;
-  background-color: #b5dde9;
+  background-color: #ffffff;
   border-bottom: 1px solid #a79f9f;
   border-radius: 8px;
 }
@@ -31,17 +32,21 @@
   text-decoration: none;
   color: #333;
   font-size: 1rem;
+  line-height: 1.5;
 }
 .nav ul li a:hover {
   color: #007bff;
 }
 
 .logoutBtn {
-  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 1rem;
   font-size: 1rem;
   font-weight: bold;
   color: #ffffff;
-  background-color: #f44336;
+  background-color: #b98682;
   border: none;
   border-radius: 5px;
   cursor: pointer;

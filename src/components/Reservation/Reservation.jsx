@@ -30,7 +30,6 @@ export default function Reservation() {
 
   const reservationCollectionRef = collection(db, "reservations");
 
-  // Функция за проверка и създаване на документ за наличност
   const checkAndCreateAvailability = async (roomType, date) => {
     const availabilityDocRef = doc(db, "rooms", roomType, "availability", date);
 
@@ -38,7 +37,7 @@ export default function Reservation() {
 
     if (!availabilityDoc.exists()) {
       await setDoc(availabilityDocRef, {
-        availableRooms: 10, // Можеш да зададеш начален брой налични стаи тук
+        availableRooms: 10,
       });
     }
   };
@@ -48,8 +47,6 @@ export default function Reservation() {
       const roomDocRef = doc(db, "rooms", selectedRoomType);
       const roomDoc = await getDoc(roomDocRef);
       if (roomDoc.exists()) {
-        console.log("Room document data:", roomDoc.data());
-        console.log("Room price:", roomDoc.data().price);
         setRoomPrice(roomDoc.data().price);
       } else {
         console.error("No such document!");
@@ -172,6 +169,10 @@ export default function Reservation() {
       return;
     }
 
+    const differenceInTime = new Date(checkOutDate) - new Date(checkInDate);
+    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+    // const totalPrice = differenceInDays * roomPrice;
+
     try {
       let allDaysAvailable = true;
 
@@ -208,16 +209,15 @@ export default function Reservation() {
         return;
       }
 
-      // Добавяне на резервация
       await addDoc(reservationCollectionRef, {
         userId: userId,
         checkInDate: checkInTimestamp,
         checkOutDate: checkOutTimestamp,
         roomType: roomType,
         guests: guests,
+        price: roomPrice * differenceInDays, // Добавяне на цената към резервацията
       });
 
-      // Намаляване на броя на наличните стаи за всяка дата
       for (
         let day = new Date(checkInTimestamp.toDate());
         day <= checkOutTimestamp.toDate();

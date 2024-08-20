@@ -23,7 +23,7 @@ import styles from "./MyReservations.module.css";
 export default function MyReservations() {
   const { userId } = useContext(HotelContext);
   const { addNotification } = useContext(NotificationContext);
-  const [reservations, setReseravtions] = useState("");
+  const [reservations, setReseravtions] = useState([]);
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -100,6 +100,7 @@ export default function MyReservations() {
                 Check-out: {reservation.checkOutDate.toDate().toDateString()}
               </p>
               <p>Guests: {reservation.guests}</p>
+              <p>Price: {reservation.price}$</p>
               <Stack direction="row" spacing={1}>
                 <IconButton
                   aria-label="delete"

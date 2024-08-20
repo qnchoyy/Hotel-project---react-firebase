@@ -14,6 +14,7 @@ import ReservationConfirmation from "./components/ReservationConfirmation/Reserv
 import NotificationAlerts from "./components/Notifications/Notifications";
 import { auth } from "./config/firebase";
 import Reviews from "./components/Reviews/Reviews";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [userId, setUserId] = useState("");
@@ -63,6 +64,7 @@ function App() {
             />
           </Routes>
         </NotificationProvider>
+        <Footer />
       </HotelContext.Provider>
     </>
   );

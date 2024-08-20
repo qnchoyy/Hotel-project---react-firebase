@@ -22,3 +22,4 @@
 - [x] Add context
 - [x] Add reservations
 - [x] Add notifications
+- [x] Add previews

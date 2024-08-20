@@ -6,20 +6,38 @@ import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Home from "./components/Home/Home";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Reservation from "./components/Reservation/Reservation";
 
 import MyReservations from "./components/MyReservations/MyReservations";
 import ReservationConfirmation from "./components/ReservationConfirmation/ReservationConfirmation";
 import NotificationAlerts from "./components/Notifications/Notifications";
+import { auth } from "./config/firebase";
+import Reviews from "./components/Reviews/Reviews";
 
 function App() {
   const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
 
   const contextObject = {
     userId,
     setUserId,
+    email,
   };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setEmail(user.email);
+        setUserId(user.uid);
+      } else {
+        setEmail(null);
+        setUserId(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [setUserId, setEmail]);
 
   return (
     <>
@@ -32,6 +50,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/reservations" element={<Reservation />} />
+            <Route path="/reviews" element={<Reviews />} />
             <Route
               path="/reservation-confirmation"
               element={<ReservationConfirmation />}

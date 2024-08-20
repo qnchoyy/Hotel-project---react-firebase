@@ -40,9 +40,9 @@ export default function Header() {
           <li>
             <Link to="/">Home</Link>
           </li>
-          {/* <li>
-            <Link to="/about">About</Link>
-          </li> */}
+          <li>
+            <Link to="/reviews">Reviews</Link>
+          </li>
           <li>
             <Link to="/my-reservations">My Reservations</Link>
           </li>

@@ -1,17 +1,9 @@
 import styles from "./Footer.module.css";
-import logo from "../../images/logo.png";
 
 export default function Footer() {
   return (
     <footer className={styles.footer}>
-      <div className={styles.container}>
-        <div className={styles.logoSection}>
-          <img src={logo} alt="Luxury Retreat" className={styles.logo} />
-          <p className={styles.description}>
-            Experience the luxury and comfort with us.
-          </p>
-        </div>
-
+      {/* <div className={styles.container}>
         <div className={styles.socialSection}>
           <p className={styles.followUs}>Follow Us:</p>
           <div className={styles.socialIcons}>
@@ -32,7 +24,7 @@ export default function Footer() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
       <div className={styles.copySection}>
         <p>© 2024 Luxury Retreat. All rights reserved.</p>
       </div>

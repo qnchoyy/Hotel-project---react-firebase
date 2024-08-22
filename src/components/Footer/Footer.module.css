@@ -1,8 +1,7 @@
 .footer {
-  background-color: #333;
+  background-color: white;
   color: #fff;
   padding: 20px 0;
-  text-align: center;
   font-size: 14px;
 }
 
@@ -10,57 +9,41 @@
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   padding: 0 20px;
 }
 
-.logoSection {
-  flex: 1;
-  text-align: left;
-  margin-bottom: 0;
-}
-
-.logo {
-  max-width: 100px;
-  margin-bottom: 10px;
-}
-
-.description {
-  font-size: 14px;
-  margin: 5px 0;
-}
-
 .socialSection {
-  flex: 1;
-  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .followUs {
+  color: #222;
   margin-bottom: 5px;
   font-size: 18px;
-  margin-right: 20px;
 }
 
 .socialIcons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 }
 
 .socialIcons img {
-  width: 24px;
-  height: 24px;
-  margin: 0 8px;
-  display: inline-block;
+  width: 25px;
+  height: 25px;
+  margin-left: 8px;
 }
 
 .copySection {
   background-color: #222;
-  padding: 10px 0;
+  padding: 5px 0;
   font-size: 12px;
   color: #aaa;
   text-align: center;
   width: 100%;
+  margin-top: 10px;
 }

@@ -215,7 +215,7 @@ export default function Reservation() {
         checkOutDate: checkOutTimestamp,
         roomType: roomType,
         guests: guests,
-        price: roomPrice * differenceInDays, // Добавяне на цената към резервацията
+        price: roomPrice * differenceInDays,
       });
 
       for (

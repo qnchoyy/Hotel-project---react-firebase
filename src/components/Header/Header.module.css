@@ -4,7 +4,7 @@
   font-size: 1rem;
   align-items: center;
   padding: 0.25rem 1rem;
-  background-color: #ffffff;
+  background-color: white;
   border-bottom: 1px solid #a79f9f;
   border-radius: 8px;
 }
@@ -31,12 +31,12 @@
 
 .nav ul li a {
   text-decoration: none;
-  color: #333;
+  color: #100606;
   font-size: 1rem;
   line-height: 1.5;
 }
 .nav ul li a:hover {
-  color: #007bff;
+  color: #5760ab;
 }
 
 .logoutBtn {
@@ -47,7 +47,7 @@
   font-size: 1rem;
   font-weight: bold;
   color: #ffffff;
-  background-color: #d0c1c0;
+  background-color: #b3afaf;
   border: none;
   border-radius: 5px;
   cursor: pointer;

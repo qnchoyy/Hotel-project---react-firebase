@@ -42,7 +42,7 @@
   color: #151212;
   text-shadow: 2px 4px 6px rgba(0, 0, 0, 0.5);
   letter-spacing: 2px;
-  z-index: 1000;
+  z-index: 100;
   margin: 0;
   padding: 0;
   text-align: center;

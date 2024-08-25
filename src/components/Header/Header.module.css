@@ -7,6 +7,7 @@
   background-color: white;
   border-bottom: 1px solid #a79f9f;
   border-radius: 8px;
+  position: relative;
 }
 
 .logo {
@@ -16,11 +17,17 @@
   border-radius: 10px;
 }
 
-.logo a {
+.hamburger {
+  display: none;
   font-size: 1.5rem;
-  font-weight: bold;
-  color: #151d37;
-  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav {
+  display: flex;
+  z-index: 1000;
 }
 
 .nav ul {
@@ -35,6 +42,7 @@
   font-size: 1rem;
   line-height: 1.5;
 }
+
 .nav ul li a:hover {
   color: #5760ab;
 }
@@ -65,4 +73,46 @@
 
 .logoutBtn:active {
   background-color: #b71c1c;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    border-radius: 0 0 8px 8px;
+    border: 1px solid #a79f9f;
+    z-index: 1000;
+  }
+
+  .showMenu {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav ul {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav ul li a {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    text-align: center;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .logoutBtn {
+    width: 20%;
+    padding: 0.5rem 1rem;
+    text-align: center;
+  }
 }

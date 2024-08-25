@@ -23,3 +23,6 @@
 - [x] Add reservations
 - [x] Add notifications
 - [x] Add previews
+
+Deployed
+https://hotel-project-firebase-react.web.app/
